@@ -1,7 +1,40 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { generateCitySentiment, generateMessage, cities } from '@/lib/simulator';
+
+// Cities for heatmap (standalone, no simulator dependency)
+const CITIES = [
+  { name: 'Mumbai', lat: 19.076, lng: 72.877, population: 20.7, teamBias: 'MI' },
+  { name: 'Chennai', lat: 13.082, lng: 80.270, population: 10.9, teamBias: 'CSK' },
+  { name: 'Delhi', lat: 28.704, lng: 77.102, population: 16.3, teamBias: null },
+  { name: 'Bangalore', lat: 12.971, lng: 77.594, population: 12.3, teamBias: 'RCB' },
+  { name: 'Kolkata', lat: 22.572, lng: 88.363, population: 14.8, teamBias: 'KKR' },
+  { name: 'Hyderabad', lat: 17.385, lng: 78.486, population: 10.0, teamBias: 'SRH' },
+  { name: 'Pune', lat: 18.520, lng: 73.856, population: 7.4, teamBias: 'MI' },
+  { name: 'Ahmedabad', lat: 23.022, lng: 72.571, population: 8.0, teamBias: 'GT' },
+  { name: 'Jaipur', lat: 26.912, lng: 75.787, population: 6.6, teamBias: 'RR' },
+  { name: 'Lucknow', lat: 26.846, lng: 80.946, population: 5.0, teamBias: 'LSG' },
+  { name: 'Chandigarh', lat: 30.733, lng: 76.779, population: 3.0, teamBias: 'PBKS' },
+  { name: 'Indore', lat: 22.719, lng: 75.857, population: 3.2, teamBias: null },
+];
+
+function clamp(val, min, max) { return Math.min(max, Math.max(min, val)); }
+
+function makeCitySentiment(baseEmotions, battingCode) {
+  return CITIES.map(city => {
+    const emo = { ...baseEmotions };
+    if (city.teamBias === battingCode) {
+      emo.euphoria = clamp(emo.euphoria + 0.15, 0, 1);
+      emo.jubilation = clamp(emo.jubilation + 0.1, 0, 1);
+      emo.frustration = clamp(emo.frustration - 0.1, 0, 1);
+    }
+    Object.keys(emo).forEach(k => {
+      emo[k] = clamp(emo[k] + (Math.random() - 0.5) * 0.15, 0, 1);
+    });
+    const dominant = Object.entries(emo).reduce((a, b) => a[1] > b[1] ? a : b);
+    return { ...city, emotions: emo, dominant: dominant[0], dominantScore: dominant[1], messageCount: Math.floor(city.population * 200 * (1 + dominant[1])) };
+  });
+}
 
 /**
  * useLiveData Hook
@@ -461,11 +494,11 @@ export function useLiveData({ matchId = null, videoIds = [] } = {}) {
     return () => timers.forEach(t => clearInterval(t));
   }, [ytChatIds, pollYtChat]);
 
-  // City sentiment (generated, since we can't geo-locate chat users)
+  // City sentiment (generated using hook's own emotions)
   useEffect(() => {
     if (!isConnected) return;
     const cityInterval = setInterval(() => {
-      setCityData(generateCitySentiment());
+      setCityData(makeCitySentiment(emotions, scoreData.battingTeam?.code || ''));
     }, 5000);
     intervalsRef.current.push(cityInterval);
     return () => clearInterval(cityInterval);

@@ -247,7 +247,7 @@ export function generateMessage(dominantEmotion) {
   text = text.replace('{runs}', runsNeeded).replace('{balls}', remainingBalls);
 
   return {
-    id: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+    id: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
     text,
     platform,
     emotion,
@@ -279,7 +279,7 @@ function generateMomentCard(emotion, score, zScore, event) {
   const intensityIndex = Math.min(Math.floor(score * 5), 4);
 
   return {
-    id: `moment_${Date.now()}`,
+    id: `moment_${Date.now()}_${Math.random().toString(36).substr(2, 8)}`,
     title: randomPick(titles[emotion]),
     emotion,
     emoji: { tension: '😰', euphoria: '🤩', frustration: '😤', disbelief: '😱', jubilation: '🎉' }[emotion],

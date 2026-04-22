@@ -19,13 +19,16 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+export const viewport = {
+  themeColor: "#06080f",
+};
+
 export const metadata = {
   title: "Crowd Pulse — Live Emotional Scoreboard | IPL 2026",
   description:
     "Real-time emotional analytics platform for IPL cricket matches. Live sentiment analysis across 5 emotional pillars: Tension, Euphoria, Frustration, Disbelief, and Jubilation.",
   keywords: "IPL, cricket, sentiment analysis, emotional analytics, crowd pulse, real-time",
   authors: [{ name: "Crowd Pulse" }],
-  themeColor: "#06080f",
   openGraph: {
     title: "Crowd Pulse — Live Emotional Scoreboard",
     description: "Real-time emotional analytics for IPL cricket matches",

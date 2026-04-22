@@ -1,0 +1,20 @@
+# Crowd Pulse Backend Dependencies
+# ═══════════════════════════════════
+
+# Async HTTP client (ingestion workers)
+aiohttp>=3.9.0
+
+# Google Cloud Services
+google-cloud-pubsub>=2.21.0
+google-cloud-bigquery>=3.19.0
+google-cloud-firestore>=2.16.0
+google-cloud-storage>=2.16.0
+
+# Gemini AI (sentiment classification)
+google-generativeai>=0.7.0
+
+# YouTube Live Chat streaming
+pytchat>=0.5.5
+
+# Cloud Functions framework
+functions-framework>=3.5.0

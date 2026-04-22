@@ -20,14 +20,26 @@ export default function DashboardHeader({ scoreData, isConnected, totalMessages,
 
       <div className={styles.matchInfo}>
         <div className={styles.teams}>
-          <div className={`${styles.badge} ${styles.badgeMI}`}>MI</div>
+          <div className={`${styles.badge} ${styles.badgeMI}`}>
+            {scoreData.battingTeam?.code || 'BAT'}
+          </div>
           <div>
             <span className={styles.matchScore}>{scoreData.score}</span>
             <span className={styles.overs}>({scoreData.overs} ov)</span>
           </div>
           <span className={styles.vs}>VS</span>
-          <div className={`${styles.badge} ${styles.badgeCSK}`}>CSK</div>
+          <div className={`${styles.badge} ${styles.badgeCSK}`}>
+            {scoreData.bowlingTeam?.code || 'BWL'}
+          </div>
         </div>
+
+        {scoreData.matchName && (
+          <div className={styles.inningsInfo}>
+            <span className={styles.inningsLabel} style={{ fontSize: '0.65rem', opacity: 0.6 }}>
+              {scoreData.matchName}
+            </span>
+          </div>
+        )}
 
         <div className={styles.inningsInfo}>
           <span className={styles.inningsLabel}>
@@ -35,6 +47,11 @@ export default function DashboardHeader({ scoreData, isConnected, totalMessages,
           </span>
           {scoreData.target && (
             <span className={styles.targetLabel}>Target: {scoreData.target}</span>
+          )}
+          {scoreData.matchStatus && (
+            <span className={styles.inningsLabel} style={{ color: '#60a5fa', fontSize: '0.65rem' }}>
+              {scoreData.matchStatus}
+            </span>
           )}
         </div>
 

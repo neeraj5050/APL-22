@@ -28,6 +28,93 @@
   font-family: var(--font-mono);
 }
 
+/* ─── Mode Bar ───────────────────────────────────────────── */
+.modeBar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+}
+
+.backBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary, rgba(255,255,255,0.6));
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.modeBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0.3rem 0.75rem;
+  border-radius: 2rem;
+}
+
+.modeBadge[data-mode="live"] {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.modeBadge[data-mode="simulator"] {
+  background: rgba(99, 102, 241, 0.1);
+  color: #8b5cf6;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.livePulse {
+  width: 6px;
+  height: 6px;
+  background: #ef4444;
+  border-radius: 50%;
+  animation: pulse-live 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+
+.ytStatus {
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+
+.ytConnected {
+  color: #22c55e;
+}
+
+.ytPending {
+  color: rgba(255, 255, 255, 0.4);
+  animation: fade-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes fade-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.modeNote {
+  font-size: 0.75rem;
+  color: var(--text-secondary, rgba(255,255,255,0.4));
+}
+
 @media (max-width: 1200px) {
   .body {
     grid-template-columns: 1fr;
